@@ -11,7 +11,7 @@ from typing import Literal
 from flask import send_file, request, Response, send_from_directory
 from flask_openapi3 import APIBlueprint, Tag
 from pydantic import BaseModel, Field
-import werkzeug.wsgi
+import json
 from app.api.apischemas import TrackHashSchema
 from app.lib.trackslib import get_silence_paddings
 from app.lib.transcoder import start_transcoding
@@ -21,6 +21,13 @@ from app.utils.files import guess_mime_type
 
 bp_tag = Tag(name="File", description="Audio files")
 api = APIBlueprint("track", __name__, url_prefix="/file", abp_tags=[bp_tag])
+
+
+@api.get("/shuffle")
+def shuffle_tracks():
+    shuffled_tracks = TrackStore.shuffle_tracks()
+    tracks = [track.dict() for track in shuffled_tracks]
+    return json.dumps(tracks)
 
 
 class TransCodeStore:

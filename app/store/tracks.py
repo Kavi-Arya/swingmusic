@@ -2,6 +2,7 @@
 
 import itertools
 import json
+import random
 from typing import Callable, Iterable
 from app.db.libdata import TrackTable
 
@@ -188,6 +189,14 @@ class TrackStore:
         """
         return len(cls.trackhashmap.get(trackhash, []))
 
+    @classmethod
+    def shuffle_tracks(cls):
+        """
+        Shuffles all tracks randomly.
+        """
+        tracks = cls.get_flat_list()
+        random.shuffle(tracks)
+        return tracks
     # ================================================
     # ================== GETTERS =====================
     # ================================================

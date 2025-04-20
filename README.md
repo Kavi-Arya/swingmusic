@@ -118,7 +118,7 @@ services:
       - /path/to/music:/music
       - /path/to/config:/config
     ports:
-      - "1970:1970"
+      - "1970:1970" 
     restart: unless-stopped
 ```
 
